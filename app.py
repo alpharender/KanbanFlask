@@ -21,7 +21,7 @@ users = []
 users.append(User(1, "Jimbo", "password"))
 users.append(User(2, "Jones", "password"))
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
     return render_template("index.html")
 
