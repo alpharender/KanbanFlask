@@ -1,25 +1,25 @@
 from flask import Flask, render_template, request, redirect, session, g, url_for
 # from flask.ext.login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = "secretkey"
 
 
-class User:
-    def __init__(self, id, username, password):
-        self.id = id
-        self.username = username
-        self.password = password
+# class User:
+#     def __init__(self, id, username, password):
+#         self.id = id
+#         self.username = username
+#         self.password = password
 
-    def __repr__(self):
-        return f"User: {self.username}"
+#     def __repr__(self):
+#         return f"User: {self.username}"
 
 
 
-users = []
-users.append(User(1, "Jimbo", "password"))
-users.append(User(2, "Jones", "password"))
+# users = []
+# users.append(User(1, "Jimbo", "password"))
+# users.append(User(2, "Jones", "password"))
 
 @app.route("/")
 def index():
