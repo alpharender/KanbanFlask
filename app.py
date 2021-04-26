@@ -32,22 +32,22 @@ def index():
 #         user = [x for x in users if x.id == session['user_id']][0]
 #         g.user = user
 
-# @app.route("/login", methods=["GET", "POST"])
-# def login():
-#     if request.method == "POST":
-#         session.pop('user_id', None)
-#         username = request.form["username"]
-#         password = request.form["password"]
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        session.pop('user_id', None)
+        username = request.form["username"]
+        password = request.form["password"]
 
-#         user = [x for x in users if x.username == username][0] #assumes unique usernames
+        user = [x for x in users if x.username == username][0] #assumes unique usernames
 
-#         if user and user.password == password:
-#             session['user_id'] = user.id
-#             return redirect(url_for("profile"))
+        if user and user.password == password:
+            session['user_id'] = user.id
+            return redirect(url_for("profile"))
 
-#         return redirect(url_for('login'))
+        return redirect(url_for('login'))
 
-#     return render_template("login.html")
+    return render_template("login.html")
 
 
 # @app.route("/profile")
