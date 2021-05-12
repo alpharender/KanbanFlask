@@ -1,19 +1,30 @@
 from flask import Flask, render_template, request, redirect, session, g, url_for
-# from flask.ext.login import LoginManager
-# from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 app = Flask(__name__)
-app.secret_key = "secretkey"
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
 
+basedir = os.path.abspath(os.path.dirname(__file__))
 
-# class User:
-#     def __init__(self, id, username, password):
-#         self.id = id
-#         self.username = username
-#         self.password = password
+app.config['SECRET_KEY'] = 'secret-key-goes-here'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 
-#     def __repr__(self):
-#         return f"User: {self.username}"
+db = SQLAlchemy()
+db.init_app(app)
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True) # primary keys are required by SQLAlchemy
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+    name = db.Column(db.String(1000))
+
+    # def set_password(self, password):
+    #     self
 
 
 
@@ -21,16 +32,20 @@ app.secret_key = "secretkey"
 # users.append(User(1, "Jimbo", "password"))
 # users.append(User(2, "Jones", "password"))
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
+
 @app.route("/")
 def index():
     return render_template("index.html")
 
 
-# @app.before_request
-# def before_request():
-#     if "user_id" in session:
-#         user = [x for x in users if x.id == session['user_id']][0]
-#         g.user = user
+@app.before_request
+def before_request():
+    if "user_id" in session:
+        user = [x for x in users if x.id == session['user_id']][0]
+        g.user = user
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

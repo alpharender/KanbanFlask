@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+<!-- {% extends "base.html" %}
 {% block title %}
     Login
 {% endblock %}
@@ -14,11 +14,28 @@
       <label for="exampleInputPassword1">Password</label>
       <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
     </div>
-    <!-- <div class="form-check">
+     <div class="form-check">
       <input type="checkbox" class="form-check-input" id="exampleCheck1">
       <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div> -->
+    </div> 
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
+{% endblock %} 
+-->
+
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Log In{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="username">Username</label>
+    <input name="username" id="username" required>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required>
+    <input type="submit" value="Log In">
+  </form>
 {% endblock %}
